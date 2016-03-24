@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="HaiTo">
+  <title>いい加減にDockerで遊びたい</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="reveal.js/css/theme/serif.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+  <h1 class="title">いい加減にDockerで遊びたい</h1>
+  <h2 class="author">HaiTo</h2>
+  <h3 class="date">2016/03/23</h3>
+</section>
+
+<section id="docker" class="slide level2">
+<h1>Docker</h1>
+<ul>
+<li>コンテナタイプの仮想環境を作る何か</li>
+<li>「仮想」について深く掘り下げると大学時代の懐かしい思い出が蘇ってくるので掘り下げない</li>
+<li>VMWareとかの仮想化に比べて、OSとかを完全にエミュレートしたりするわけじゃないので安い</li>
+<li>が、いろいろ制約もあったり。</li>
+</ul>
+</section>
+<section id="docker-1" class="slide level2">
+<h1>Docker</h1>
+<ul>
+<li>「安い」のが良さ</li>
+<li>コンテナの起動とかが早い(VMWareとかのOSの起動から始まる奴に比べれば)</li>
+</ul>
+</section>
+<section id="docker-machine" class="slide level2">
+<h1>docker-machine</h1>
+<ul>
+<li>君は india を覚えているか</li>
+</ul>
+</section>
+<section id="docker-machine-1" class="slide level2">
+<h1>docker-machine</h1>
+<ul>
+<li>Dockerのコンテナはその性質上、HostのOSと同じOSのコンテナしか立ち上げられない</li>
+<li>当たり前だよね。だってOSを立ち上げているわけじゃあないし。ファイルシステムとかで切り分けているだけだし。</li>
+<li>でも大体みんなOSX。</li>
+<li>OSXを気軽に立ち上げられたらよかったけど……(ハッキントッシュのことは忘れてくれ。頼む)</li>
+<li>というわけで、まずはLinuxのマシンをOSXの人やWindowsの人は立ち上げる必要があるわけ。</li>
+<li>boot2docker</li>
+</ul>
+</section>
+<section id="docker-machine-2" class="slide level2">
+<h1>docker-machine</h1>
+<ul>
+<li>Vagrantとか出てきて楽になったけどメンドイのはメンドイ</li>
+<li>そこで現れたのが docker-machine。コマンド一つでLinuxOSが立ち上がる便利ツールさん</li>
+<li>そしてその立ち上げ先としていろいろ選べる。</li>
+<li>EC2,DigitalOcean, もちろんローカルのVirtualBox……</li>
+<li>boot2docker とかVirtualBoxのアレコレを忘れられるぞい</li>
+</ul>
+</section>
+<section id="docker-compose" class="slide level2">
+<h1>docker-compose</h1>
+<ul>
+<li>君は india を覚えているか</li>
+</ul>
+</section>
+<section id="docker-compose-1" class="slide level2">
+<h1>docker-compose</h1>
+<ul>
+<li>Docker Container のオーケストレーションを実現する為のソフトウェア</li>
+<li>これがない時代はいろいろ大変だった</li>
+<li>link オプションだよりで、docker run --link ... みたいなシェルスクリプト芸</li>
+<li>yaml に「このコンテナはこのコンテナと繋がっていて、そのアドレスとポートはこれで、環境変数は」……と定義しておく</li>
+<li>yaml はヒューマンリーダブルですよ。本当に。JSON？ 知らない子ですね……</li>
+</ul>
+</section>
+<section id="で何が嬉しいの" class="slide level2">
+<h1>で、何が嬉しいの？</h1>
+<ul>
+<li>Microservices 間のPortの定義とか、いろいろ全部一箇所にまとめてかいて手元で全部バーンとあげて試して……とかが出来る</li>
+<li>ほかは……まぁ使い捨て？られそう？ MySqlを永続化したら意味ないけどね？</li>
+<li>本番まで全部Dockerにするなら、話はいろいろ変わるだろうけど辛いらしいからちょっと……</li>
+</ul>
+</section>
+<section id="でデモは" class="slide level2">
+<h1>で、デモは？</h1>
+<ul>
+<li>う、動くかなぁ……</li>
+<li>GEESのデモたるEntryはシステムが複雑で、Worksは単体じゃ動かないしGeesGees然り……</li>
+</ul>
+</section>
+<section id="デモに至るまでの道のり" class="slide level2">
+<h1>デモに至るまでの道のり</h1>
+<ul>
+<li>RAILS_ENV=docker を作る</li>
+<li>専用のapplicayion.ymlのKeyとかDatabase.ymlのENVを設定する</li>
+<li>最大の敵は Private Gem。 <code>bundle package --all</code> で全部キャッシュすることに。</li>
+<li>なんか動かないの連続……</li>
+</ul>
+</section>
+<section id="ややった" class="slide level2">
+<h1>や、やった……！</h1>
+<ul>
+<li>動いたよ！！！おじちゃん動いたよ！！！</li>
+<li><code>git checkout dockerable</code></li>
+</ul>
+</section>
+    </div>
+  </div>
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Vertical centering of slides
+        center: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
